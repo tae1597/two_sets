@@ -20,8 +20,8 @@ impl<'a> FastScanner<'a> {
     #[inline(always)]
     pub fn next_u32(&mut self) -> Option<u32> {
         // Skip leading whitespace bytes (ASCII <= 32)
-        while self.byte_cursor < self.raw_buffer.len() 
-            && unsafe { *self.raw_buffer.get_unchecked(self.byte_cursor) } <= b' ' 
+        while self.byte_cursor < self.raw_buffer.len()
+            && unsafe { *self.raw_buffer.get_unchecked(self.byte_cursor) } <= b' '
         {
             self.byte_cursor += 1;
         }
@@ -159,10 +159,10 @@ pub fn solve_greedy_vector(n_val: u32) -> Option<(Vec<u32>, Vec<u32>)> {
 
     let n_usize = n_val as usize;
     let mut membership_buffer = vec![0u8; n_usize + 1];
-    
+
     // total_sum / 2 = n * (n + 1) / 4
     let mut target_sum: u64 = (n_val as u64) * ((n_val as u64) + 1) / 4;
-    
+
     // Greedy loop from n down to 1
     let mut val_lookup = n_val;
     while val_lookup >= 1 {
@@ -209,7 +209,7 @@ fn main() -> io::Result<()> {
     // Use Algorithm A as the primary production solver for its zero-lookup stride layout
     if let Some((set_a, set_b)) = solve_block_stride(n_val) {
         writer.write_str("YES\n")?;
-        
+
         // Print Set A
         writer.write_u32(set_a.len() as u32)?;
         writer.write_newline()?;
@@ -257,9 +257,13 @@ mod tests {
             sum_b += x as u64;
         }
         assert_eq!(sum_a, sum_b, "Sums are not equal for n={}", n);
-        
+
         let expected_sum = (n as u64) * (n as u64 + 1) / 4;
-        assert_eq!(sum_a, expected_sum, "Sum is not equal to target sum for n={}", n);
+        assert_eq!(
+            sum_a, expected_sum,
+            "Sum is not equal to target sum for n={}",
+            n
+        );
 
         // Verify elements are 1..=n and distinct
         let mut present = vec![false; n as usize + 1];
@@ -284,7 +288,7 @@ mod tests {
         assert!(solve_block_stride(2).is_none());
         assert!(solve_block_stride(5).is_none());
         assert!(solve_block_stride(6).is_none());
-        
+
         assert!(solve_greedy_vector(1).is_none());
         assert!(solve_greedy_vector(2).is_none());
         assert!(solve_greedy_vector(5).is_none());

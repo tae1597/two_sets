@@ -20,8 +20,8 @@ impl<'a> FastScanner<'a> {
     #[inline(always)]
     pub fn next_u32(&mut self) -> Option<u32> {
         // Skip leading whitespace bytes (ASCII <= 32)
-        while self.byte_cursor < self.raw_buffer.len() 
-            && unsafe { *self.raw_buffer.get_unchecked(self.byte_cursor) } <= b' ' 
+        while self.byte_cursor < self.raw_buffer.len()
+            && unsafe { *self.raw_buffer.get_unchecked(self.byte_cursor) } <= b' '
         {
             self.byte_cursor += 1;
         }
@@ -159,10 +159,10 @@ pub fn solve_greedy_vector(n_val: u32) -> Option<(Vec<u32>, Vec<u32>)> {
 
     let n_usize = n_val as usize;
     let mut membership_buffer = vec![0u8; n_usize + 1];
-    
+
     // total_sum / 2 = n * (n + 1) / 4
     let mut target_sum: u64 = (n_val as u64) * ((n_val as u64) + 1) / 4;
-    
+
     // Greedy loop from n down to 1
     let mut val_lookup = n_val;
     while val_lookup >= 1 {
